@@ -2,13 +2,13 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3'  // Yeh naam wahi hona chahiye jo Jenkins Global Tool Config mein diya hai
+        maven 'Maven 3'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clone') {
             steps {
-                git url: 'https://github.com/Arjunnnsingh/Java.git', branch: 'main'
+                git 'https://github.com/Arjunnnsingh/JavaMavenHelloWorld.git'
             }
         }
 
@@ -18,10 +18,17 @@ pipeline {
             }
         }
 
-        stage('Archive') {
+        stage('Docker Build') {
             steps {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                sh 'docker build -t hello-world-app .'
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                sh 'docker run -d -p 8080:8080 hello-world-app'
             }
         }
     }
 }
+
