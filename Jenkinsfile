@@ -27,7 +27,7 @@ pipeline {
 
         stage('Docker Run') {
             steps {
-                sh 'docker run -d -p 8080:8080 hello-world-app'
+                sh 'docker run -d -p 8081:8080 hello-world-app'
             }
         }
     }
